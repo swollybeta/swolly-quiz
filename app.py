@@ -1,9 +1,9 @@
+import os
 from flask import Flask, request, session
 
 app = Flask(__name__)
 app.secret_key = "segredo_quiz_sneakers"
 
-# Base de dados dos modelos e tags
 sneakers = [
     {"name": "Jordan 1", "tags": ["OG", "colorful", "Jordan", "nike", "trendy", "basketball"]},
     {"name": "Jordan 4", "tags": ["trendy", "Jordan", "Costy", "niche"]},
@@ -96,10 +96,10 @@ def quiz4():
         user_tags.append("Jordan")
         user_tags.append("not nike")
     session['user_tags'] = user_tags
-    # Recomendar sapatilha
     recomendados = recommend_sneakers(user_tags, sneakers)
     melhor = recomendados[0]
     return f"<h2>Modelo recomendado:</h2><b>{melhor['name']}</b><br><br>Tags coincidentes: {', '.join(melhor['tags'])}"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
+
